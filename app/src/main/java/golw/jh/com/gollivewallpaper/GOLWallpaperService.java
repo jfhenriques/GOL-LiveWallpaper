@@ -30,14 +30,15 @@ public class GOLWallpaperService extends WallpaperService {
     }
 
     private static class GOLState {
-        public boolean curState[][] = null;
-        public boolean _temp[][] = null;
+        public byte curState[][] = null;
+        public byte _temp[][] = null;
 
         private Paint alive,dead;
 
-        private final int W, H;
-        private final int FACTOR;
-        private final int HALF_FACTOR;
+        public final int W, H;
+        public final int FACTOR;
+
+        private int X_START=0,Y_START=0;
 
         public GOLState(int w, int h, int factor)
         {
@@ -46,13 +47,11 @@ public class GOLWallpaperService extends WallpaperService {
             w /= FACTOR;
             h /= FACTOR;
 
-            HALF_FACTOR = FACTOR/2;
-
             this.W = w;
             this.H = h;
 
-            curState = new boolean[h][w];
-            _temp = new boolean[h][w];
+            curState = new byte[h][w];
+            _temp = new byte[h][w];
 
             Random r = new Random(System.currentTimeMillis());
 
@@ -69,27 +68,42 @@ public class GOLWallpaperService extends WallpaperService {
             {
                 for(x=0; x < w; x++) {
                     // has possibility of 1/5 to be alive
-                    curState[y][x] = ( r.nextInt(6) == 0 ) ;
+                    curState[y][x] = (byte) (( r.nextInt(6) == 0 ) ? 1 : 0);
                     //_temp   [y][x] = 0;
                 }
             }
         }
 
+        public void incXStart(int inc)
+        {
+            X_START = ( X_START + inc ) % W ;
+
+            if( X_START < 0 )
+                X_START += W;
+        }
+        public void incYStart(int inc)
+        {
+            Y_START = ( Y_START + inc ) % H ;
+
+            if( Y_START < 0 )
+                Y_START += H;
+        }
+
         private int countNeigh(int x, int y)
         {
             return    isAlive(x - 1, y - 1)
-                    + isAlive(x, y - 1)
+                    + isAlive(x    , y - 1)
                     + isAlive(x + 1, y - 1)
 
-                    + isAlive(x - 1, y)
-                    + isAlive(x + 1, y)
+                    + isAlive(x - 1, y    )
+                    + isAlive(x + 1, y    )
 
                     + isAlive(x - 1, y + 1)
-                    + isAlive(x, y + 1)
+                    + isAlive(x    , y + 1)
                     + isAlive(x + 1, y + 1);
         }
 
-        private int isAlive(int x, int y)
+        private byte isAlive(int x, int y)
         {
             if( x < 0 )
                 x = W-1;
@@ -103,37 +117,43 @@ public class GOLWallpaperService extends WallpaperService {
             if( y >= H )
                 y = 0;
 
-            return curState[y][x] ? 1 : 0;
+            return curState[y][x];
         }
 
         public void computeNextGen(Canvas canvas)
         {
-            boolean _oldState[][];
-            int neigh,y,x,xF,yF;
+            byte _oldState[][];
+            int neigh,y,x,xF,yF,drawY,drawX;
             boolean cur;
 
             for(y=0; y < H; y++)
             {
+                drawY = (y + Y_START) % H;
+
                 for(x=0; x < W; x++) {
 
-                    cur = isAlive(x,y) == 1;
+                    cur = ( isAlive(x,y) == 1 );
                     neigh = countNeigh(x,y);
 
-                    if( cur )
-                        _temp[y][x] = (neigh == 2 || neigh == 3) ;
-
-                    else
-                        _temp[y][x] = (neigh == 3) ;
-
+                    if( cur ) {
+                        cur = ( neigh == 2 || neigh == 3 );
+                        _temp[y][x] = (byte) (cur ? 1 : 0);
+                    }
+                    else {
+                        cur = ( neigh == 3 );
+                        _temp[y][x] = (byte) (cur ? 1 : 0);
+                    }
 
                     if( FACTOR > 1 ) {
-                        xF = x*FACTOR;
-                        yF = y*FACTOR;
-                        canvas.drawRect(xF,yF, xF + FACTOR, yF + FACTOR, _temp[y][x] ? alive : dead);
-                        //canvas.drawCircle(xF+ HALF_FACTOR, yF + HALF_FACTOR, HALF_FACTOR, _temp[y][x] ? alive : dead);
+
+                        drawX = (x + X_START) % W;
+
+                        xF = drawX*FACTOR;
+                        yF = drawY*FACTOR;
+                        canvas.drawRect(xF,yF, xF + FACTOR, yF + FACTOR, cur ? alive : dead);
                     }
                     else
-                        canvas.drawPoint(x, y, _temp[y][x] ? alive : dead );
+                        canvas.drawPoint(x, y, cur ? alive : dead );
                 }
             }
 
@@ -158,31 +178,78 @@ public class GOLWallpaperService extends WallpaperService {
         private long lastTouchUp = 0;
         private int touchCount = 0;
 
+        private float xStart = 0,yStart=0;
+
 
         @Override
         public void onTouchEvent(MotionEvent event) {
 
-            if( event.getAction() == MotionEvent.ACTION_UP )
-            {
-                //System.out.println("------------------------" + (System.currentTimeMillis() - lastTouchUp) );
-                if( lastTouchUp == 0 || ( System.currentTimeMillis() - lastTouchUp)  < 400 )
-                {
-                    lastTouchUp = System.currentTimeMillis();
+            switch(event.getAction()) {
 
-                    touchCount++;
+                case  MotionEvent.ACTION_UP:
 
-                    if( touchCount >= 2 )
-                    {
-                        state = null;
+                    if (lastTouchUp == 0 || (System.currentTimeMillis() - lastTouchUp) < 300) {
+                        lastTouchUp = System.currentTimeMillis();
+
+                        touchCount++;
+
+                        if (touchCount >= 2) {
+                            state = null;
+                            touchCount = 0;
+                        }
+                    } else {
                         touchCount = 0;
+                        lastTouchUp = 0;
                     }
 
-                    //System.out.println("------------------------------------" + touchCount);
-                }
-                else {
-                    touchCount = 0;
-                    lastTouchUp = 0;
-                }
+                    break;
+
+                case MotionEvent.ACTION_DOWN:
+
+                    xStart = event.getX();
+                    yStart = event.getY();
+
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+
+                    int delta_factor;
+                    GOLState state = GOLWallpaperService.this.state; // just in case it gets unset during calculations
+
+                    if( state == null )
+                        break;
+
+                    float delta = event.getX() - xStart;
+
+
+                    if( delta >= state.FACTOR || delta <= state.FACTOR )
+                    {
+                        delta_factor = (int) (delta/state.FACTOR);
+
+                        xStart += ( delta_factor*state.FACTOR );
+
+                        if( xStart < 0 )
+                            xStart = 0;
+
+                        state.incXStart(delta_factor);
+                    }
+
+
+                    delta = event.getY() - yStart;
+
+                    if( delta >= state.FACTOR || delta <= state.FACTOR )
+                    {
+                        delta_factor = (int) (delta/state.FACTOR);
+
+                        yStart += ( delta_factor*state.FACTOR );
+
+                        if( yStart < 0 )
+                            yStart = 0;
+
+                        state.incYStart(delta_factor);
+                    }
+
+                    break;
             }
         }
 
