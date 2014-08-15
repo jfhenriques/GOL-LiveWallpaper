@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="golw.jh.com.gollivewallpaper">
 
-    <uses-sdk android:minSdkVersion="16" />
     <uses-feature android:name="android.software.live_wallpaper" />
 
     <application android:icon="@drawable/ic_launcher"
