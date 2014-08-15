@@ -37,6 +37,7 @@ public class GOLWallpaperService extends WallpaperService {
 
         private final int W, H;
         private final int FACTOR;
+        private final int HALF_FACTOR;
 
         public GOLState(int w, int h, int factor)
         {
@@ -44,6 +45,8 @@ public class GOLWallpaperService extends WallpaperService {
 
             w /= FACTOR;
             h /= FACTOR;
+
+            HALF_FACTOR = FACTOR/2;
 
             this.W = w;
             this.H = h;
@@ -56,8 +59,9 @@ public class GOLWallpaperService extends WallpaperService {
             alive = new Paint();
             dead = new Paint();
 
-            alive.setColor(Color.DKGRAY);
+            //alive.setColor(Color.DKGRAY);
             dead.setColor(Color.BLACK);
+            alive.setColor(Color.rgb(0x33, 0x44, 0x00));
 
             int x,y;
 
@@ -130,6 +134,7 @@ public class GOLWallpaperService extends WallpaperService {
                         xF = x*FACTOR;
                         yF = y*FACTOR;
                         canvas.drawRect(xF,yF, xF + FACTOR, yF + FACTOR, _temp[y][x] ? alive : dead);
+                        //canvas.drawCircle(xF+ HALF_FACTOR, yF + HALF_FACTOR, HALF_FACTOR, _temp[y][x] ? alive : dead);
                     }
                     else
                         canvas.drawPoint(x, y, _temp[y][x] ? alive : dead );
@@ -204,7 +209,7 @@ public class GOLWallpaperService extends WallpaperService {
 
             mHandler.removeCallbacks(mUpdateDisplay);
             if (mVisible) {
-                mHandler.postDelayed(mUpdateDisplay, 333);
+                mHandler.postDelayed(mUpdateDisplay, 400);
             }
         }
         @Override
