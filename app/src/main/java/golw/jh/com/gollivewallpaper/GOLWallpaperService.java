@@ -61,7 +61,7 @@ public class GOLWallpaperService extends WallpaperService {
 
             //alive.setColor(Color.DKGRAY);
             dead.setColor(Color.BLACK);
-            alive.setColor(Color.rgb(0x33, 0x44, 0x00));
+            alive.setColor(Color.rgb(0x33, 0x66, 0x11));
 
             int x,y;
 
@@ -69,7 +69,7 @@ public class GOLWallpaperService extends WallpaperService {
             {
                 for(x=0; x < w; x++) {
                     // has possibility of 1/5 to be alive
-                    curState[y][x] = ( r.nextInt(5) == 0 ) ;
+                    curState[y][x] = ( r.nextInt(6) == 0 ) ;
                     //_temp   [y][x] = 0;
                 }
             }
@@ -89,7 +89,7 @@ public class GOLWallpaperService extends WallpaperService {
                     + isAlive(x + 1, y + 1);
         }
 
-        private boolean getState(int x, int y)
+        private int isAlive(int x, int y)
         {
             if( x < 0 )
                 x = W-1;
@@ -103,11 +103,7 @@ public class GOLWallpaperService extends WallpaperService {
             if( y >= H )
                 y = 0;
 
-            return curState[y][x];
-        }
-        private int isAlive(int x, int y)
-        {
-            return getState(x, y) ? 1 : 0 ;
+            return curState[y][x] ? 1 : 0;
         }
 
         public void computeNextGen(Canvas canvas)
@@ -120,7 +116,7 @@ public class GOLWallpaperService extends WallpaperService {
             {
                 for(x=0; x < W; x++) {
 
-                    cur = getState(x,y);
+                    cur = isAlive(x,y) == 1;
                     neigh = countNeigh(x,y);
 
                     if( cur )
@@ -198,7 +194,7 @@ public class GOLWallpaperService extends WallpaperService {
                 if (c != null) {
 
                     if( state == null )
-                        state = new GOLState(c.getWidth(), c.getHeight(), 32);
+                        state = new GOLState(c.getWidth(), c.getHeight(), 16);
 
                     state.computeNextGen(c);
                 }
@@ -209,7 +205,7 @@ public class GOLWallpaperService extends WallpaperService {
 
             mHandler.removeCallbacks(mUpdateDisplay);
             if (mVisible) {
-                mHandler.postDelayed(mUpdateDisplay, 400);
+                mHandler.postDelayed(mUpdateDisplay, 150);
             }
         }
         @Override
