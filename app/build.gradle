@@ -5,7 +5,7 @@ android {
     buildToolsVersion '20.0.0'
 
     defaultConfig {
-        applicationId "com.example.joohenriques.myapplication"
+        applicationId "golw.jh.com.gollivewallpaper"
         minSdkVersion 16
         targetSdkVersion 16
         versionCode 1
