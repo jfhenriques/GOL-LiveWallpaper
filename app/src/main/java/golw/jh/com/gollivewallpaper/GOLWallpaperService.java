@@ -35,8 +35,8 @@ public class GOLWallpaperService extends WallpaperService implements SharedPrefe
         alive = new Paint();
         dead = new Paint();
 
-        refresh_ms = DEFAULT_FACTOR;
-        base_factor = DEFAULT_REFRESH_RATE;
+        refresh_ms = DEFAULT_REFRESH_RATE;
+        base_factor = DEFAULT_FACTOR;
         base_gen_prob = DEFAULT_GEN_PROB;
 
         //alive.setColor(Color.DKGRAY);
@@ -76,7 +76,7 @@ public class GOLWallpaperService extends WallpaperService implements SharedPrefe
         //android.os.Debug.waitForDebugger();
         int p;
         try {
-            p = Integer.parseInt(_prob, DEFAULT_GEN_PROB);
+            p = Integer.parseInt(_prob);
         } catch(Exception e) {
             p = DEFAULT_GEN_PROB;
         }
@@ -91,8 +91,9 @@ public class GOLWallpaperService extends WallpaperService implements SharedPrefe
     {
         int f;
         try {
-            f = Integer.parseInt(_factor, DEFAULT_FACTOR);
+            f = Integer.parseInt(_factor);
         } catch(Exception e) {
+            e.printStackTrace();
             f = DEFAULT_FACTOR;
         }
 
@@ -304,9 +305,9 @@ public class GOLWallpaperService extends WallpaperService implements SharedPrefe
                     if( redrawEverything || cur != oldS )
                     {
                         drawX = FACTOR * ( (x + xx_start) % W );
-                        rect.set(drawX, drawY, drawX + FACTOR, drawY + FACTOR);
+                        //rect.set(drawX, drawY, drawX + FACTOR, drawY + FACTOR);
 
-                        offScreenCanvas.drawRect(rect, ( cur == 1 ) ? alive : dead);
+                        offScreenCanvas.drawRect(drawX, drawY, drawX + FACTOR, drawY + FACTOR, ( cur == 1 ) ? alive : dead);
 
 //                        if( cur == 1 ) {
 //                            offScreenCanvas.drawLine(rect.left, rect.top, rect.right, rect.top, border);

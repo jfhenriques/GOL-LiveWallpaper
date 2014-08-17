@@ -16,13 +16,23 @@
     </string-array>
 
     <string-array name="gen_prob_entrie_list">
-        <item>1 in 100</item>
-        <item>1 in 50</item>
+        <item>1 in 10</item>
+        <item>1 in 9</item>
+        <item>1 in 8</item>
+        <item>1 in 7</item>
+        <item>1 in 6</item>
         <item>1 in 5</item>
+        <item>1 in 4</item>
+        <item>1 in 3</item>
     </string-array>
     <string-array name="gen_prob_entrievalue_list">
-        <item>100</item>
-        <item>50</item>
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
         <item>5</item>
+        <item>4</item>
+        <item>3</item>
     </string-array>
 </resources>
