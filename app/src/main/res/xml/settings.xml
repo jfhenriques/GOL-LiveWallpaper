@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:thumbnail="@drawable/ic_logo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.vanniktech.vntnumberpickerpreference.VNTNumberPickerPreference
+        xmlns:vntnumberpickerpreference="http://schemas.android.com/apk/res-auto"
+        android:key="pref_max_fps"
+        android:title="@string/max_fps_title"
+        android:defaultValue="@integer/max_draw_fps_default"
+        vntnumberpickerpreference:minValue="@integer/min_fps_value"
+        vntnumberpickerpreference:maxValue="@integer/max_fps_value" />
+
+
+    <ListPreference
+        android:key="pref_gen_prob"
+        android:title="@string/gen_prob_title"
+        android:summary="@string/gen_prob_summary"
+        android:entries="@array/gen_prob_entrie_list"
+        android:entryValues="@array/gen_prob_entrievalue_list"
+        android:dialogTitle="@string/gen_prob_title"
+        android:defaultValue="5" />
+
+    <ListPreference
+        android:key="pref_draw_factor"
+        android:title="@string/draw_factor_title"
+        android:summary="@string/draw_factor_summary"
+        android:entries="@array/draw_factor_entrie_list"
+        android:entryValues="@array/draw_factor_entrievalue_list"
+        android:dialogTitle="@string/draw_factor_title"
+        android:defaultValue="16" />
+
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:key="pref_color_back"
+        android:title="@string/color_back_title"
+        android:defaultValue="@integer/COLOR_BLACK"
+        alphaSlider="false" />
+
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:key="pref_color_cell"
+        android:title="@string/color_cell_title"
+        android:defaultValue="@integer/COLOR_GREEN"
+        alphaSlider="false" />
+
+
+
+</PreferenceScreen>

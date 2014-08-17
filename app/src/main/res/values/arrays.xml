@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="draw_factor_entrie_list">
+        <item>4 pixels per cell</item>
+        <item>8 pixels per cell</item>
+        <item>16 pixels per cell</item>
+        <item>32 pixels per cell</item>
+        <item>64 pixels per cell</item>
+    </string-array>
+    <string-array name="draw_factor_entrievalue_list">
+        <item>4</item>
+        <item>8</item>
+        <item>16</item>
+        <item>32</item>
+        <item>64</item>
+    </string-array>
+
+    <string-array name="gen_prob_entrie_list">
+        <item>1 in 100</item>
+        <item>1 in 50</item>
+        <item>1 in 5</item>
+    </string-array>
+    <string-array name="gen_prob_entrievalue_list">
+        <item>100</item>
+        <item>50</item>
+        <item>5</item>
+    </string-array>
+</resources>

@@ -1,24 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="golw.jh.com.gollivewallpaper">
+    package="golw.jh.com.gollivewallpaper"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-    <uses-feature android:name="android.software.live_wallpaper" />
+    <uses-feature
+        android:name="android.software.live_wallpaper"
+        android:required="true" />
 
-    <application android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:permission="android.permission.BIND_WALLPAPER">
-
-        <service android:name=".GOLWallpaperService"
+    <application
+        android:icon="@drawable/ic_logo"
+        android:label="@string/app_name" >
+        <service
+            android:enabled="true"
+            android:name=".GOLWallpaperService"
+            android:icon="@drawable/ic_logo"
             android:label="@string/app_name"
-            android:icon="@drawable/ic_launcher">
-
+            android:permission="android.permission.BIND_WALLPAPER" >
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
-            <meta-data android:name="android.service.wallpaper"
-                android:resource="@xml/wallpaper" />
 
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper" />
         </service>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_golsettings"
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault" >
+        </activity>
 
     </application>
 

@@ -1,3 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">GOL Live Wallpaper</string>
+    <string name="title_activity_golsettings">GOL Wallpaper Settings</string>
+
+
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on Color to apply</string>
+
+    <!-- Preferences -->
+    <string name="pref_category">Category</string>
+    <string name="color_back_title">Background Color</string>
+    <string name="color_cell_title">Cell Color</string>
+    <string name="max_fps_title">Max Draw FPS</string>
+    <string name="draw_factor_title">Size relation</string>
+    <string name="draw_factor_summary">Relation between pixel and cell size</string>
+    <string name="gen_prob_title">Initial Population Generation</string>
+    <string name="gen_prob_summary">Probability of one cell to be alive</string>
+
 </resources>

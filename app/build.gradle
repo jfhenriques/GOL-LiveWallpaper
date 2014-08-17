@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 14
+    compileSdkVersion 16
     buildToolsVersion '20.0.0'
 
     defaultConfig {
@@ -16,9 +16,6 @@ android {
             debuggable false
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-
         }
     }
 }

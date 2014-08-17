@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_draw_fps_default">5</integer>
+    <integer name="max_fps_value">20</integer>
+    <integer name="min_fps_value">1</integer>
+
+    <integer name="COLOR_BLACK">0xff000000</integer>
+    <integer name="COLOR_GREEN">0xff336611</integer>
+</resources>
