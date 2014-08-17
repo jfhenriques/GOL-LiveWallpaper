@@ -43,6 +43,4 @@
         android:defaultValue="@integer/COLOR_GREEN"
         alphaSlider="false" />
 
-
-
 </PreferenceScreen>
