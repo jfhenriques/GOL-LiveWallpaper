@@ -458,6 +458,7 @@ public class GOLWallpaperService extends WallpaperService implements SharedPrefe
         }
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            state = null;
             draw();
         }
         @Override
